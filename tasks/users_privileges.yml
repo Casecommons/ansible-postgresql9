@@ -1,0 +1,16 @@
+---
+
+- name: Update the privileges on existing PostgreSQL roles
+  postgresql_user:
+    name: "{{ item.role }}"
+    db: "{{ item.database }}"
+    port: "{{ postgresql_port }}"
+    priv: "{{ item.privileges }}"
+    state: present
+    login_host: "{{ item.host | default('localhost') }}"
+    login_user: "{{ postgresql_admin_role }}"
+    role_attr_flags: "{{ item.role_attr_flags | default('') }}"
+  sudo: yes
+  sudo_user: "{{ postgresql_admin_role }}"
+  with_items: postgresql_role_privileges
+  when: postgresql_roles|length > 0

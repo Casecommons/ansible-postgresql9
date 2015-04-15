@@ -1,0 +1,90 @@
+---
+
+# These settings are specific to PostgreSQL version 9.4.
+
+########## CONNECTIONS AND AUTHENTICATION
+
+# Security and authentication settings.
+postgresql_ssl_ciphers:
+  - 'HIGH'
+  - 'MEDIUM'
+  - '+3DES'
+  - '!aNULL'
+postgresql_ssl_prefer_server_ciphers: on
+postgresql_ssl_ecdh_curve: 'prime256v1'
+
+########## DATABASE RESOURCE USAGE SETTINGS (EXCEPT WAL)
+
+# Memory settings.
+# Enables/disables the use of huge memory pages. This setting is only supported
+# in Linux.
+# Valid settings are the following:
+# - try - (default) try to use huge pages, but fall back to normal allocation if that fails
+# - on - failure to use huge pages causes the server to prevent starting up
+# - off - do not use huge pages
+postgresql_huge_pages: try
+
+postgresql_work_mem:             4MB   # minimum 64kB
+postgresql_maintenance_work_mem: 16MB  # minimum 1MB
+
+# Dynamic shared memory implementation that the server should use.
+# Valid settings are the following:
+# - posix - for POSIX shared memory allocated using shm_open
+# - sysv - for System V shared memory allocated via shmget
+# - windows - for Windows shared memory
+# - mmap - (not recommended) to simulate shared memory using memory-mapped files stored in the data directory
+# - none - to disable this feature
+postgresql_dynamic_shared_memory_type: posix
+
+# Asynchronous behavior settings.
+# Maximum number of background processes that the system can support.
+postgresql_max_worker_processes: 8
+
+########## WRITE AHEAD LOG
+
+# Determines how much information is written to the WAL.
+# Valid settings are the following:
+# - minimal - (default) writes only the information needed to recover from a crash or immediate shutdown
+# - archive - adds logging required for WAL archiving
+# - hot_standby - further adds information required to run read-only queries on a standby server
+# - logical - adds information necessary to support logical decoding
+postgresql_wal_level: minimal
+
+# If set to 'on', writes the entire content of each disk page to WAL during the first modification of that page after a checkpoint, even for non-critical modifications of so-called hint bits.
+postgresql_wal_log_hints: off
+
+########## REPLICATION
+
+# Maximum number of replication slots that the server can support.
+# This parameter can only be set at server start.
+postgresql_max_replication_slots: 0
+
+########## AUTOVACUUM PARAMETERS
+
+# Maximum amount of memory to be used by each autovacuum worker process.
+# Valid settings are the following:
+# - -1 indicates that the value of the 'maintenance_work_mem' setting should be used
+# - > 0MB (minimum is 1MB)
+postgresql_autovacuum_work_mem: -1
+
+########## QUERY TUNING
+
+# Planner cost constants.
+# Planner's assumption about the effective size of the disk cache that is available to a single query.
+postgresql_effective_cache_size: 4GB
+
+########## CLIENT CONNECTION DEFAULTS
+
+# Select the set of available time zone abbreviations.
+# Currently, there are:
+# - Default
+# - Australia (historical usage)
+# - India
+# Custom time zone abbreviations can be added by creating a file in `share/timezonesets/`.
+postgresql_timezone_abbreviations: Default
+
+# Specifies one or more shared libraries that are to be preloaded at connection start.
+# Unlike the 'shared_preload_libraries' setting, there is no large performance
+# advantage to loading a library at session start rather than when it is first
+# used. There is some advantage, however, when connection pooling is used.
+postgresql_session_preload_libraries: []
