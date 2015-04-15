@@ -1,0 +1,19 @@
+---
+
+galaxy_info:
+  author: AlliedPlatform Contributors
+  company: AlliedPlatform
+  description: "Ansible role for installing and initializing a PostgreSQL 9.x cluster."
+  min_ansible_version: 1.9
+  license: MIT
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+  categories:
+  - database
+  - database:sql
+  - development
+
+dependencies:
+  - alliedplatform.security

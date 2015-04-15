@@ -1,0 +1,54 @@
+---
+
+- name: Ensure that the postgres data directory exists
+  file:
+    path: "{{ postgresql_data_directory }}"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    state: directory
+    mode: 0700
+  register: pgdata_dir_exists
+
+- name: Drop the existing PostgreSQL cluster
+  shell: pg_dropcluster --stop {{postgresql_version}} {{postgresql_cluster_name}}
+  sudo: yes
+  sudo_user: "{{ postgresql_service_user }}"
+  when: postgresql_cluster_reset and pgdata_dir_exists.changed
+
+- name: Create a new PostgreSQL cluster with specified encoding and locale
+  shell: pg_createcluster --start --locale {{postgresql_locale}} -e {{postgresql_encoding}} -d {{postgresql_data_directory}} {{postgresql_version}} {{postgresql_cluster_name}}
+  sudo: yes
+  sudo_user: "{{ postgresql_service_user }}"
+  when: postgresql_cluster_reset and pgdata_dir_exists.changed
+
+- name: Create the PostgreSQL HBA (Host Based Authentication) configuration file (pg_hba.conf)
+  template:
+    src: pg_hba.conf.j2
+    dest: "{{ postgresql_conf_directory }}/pg_hba.conf"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: 0640
+  register: postgresql_hba_configuration
+
+- name: Create the PostgreSQL settings configuration file (postgresql.conf)
+  template:
+    src: postgresql.conf.j2
+    dest: "{{ postgresql_conf_directory }}/postgresql.conf"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: 0640
+  register: postgresql_settings_configuration
+
+- name: Create directory for additional PostgreSQL application configuration files
+  file:
+    name: "{{ postgresql_conf_directory }}/conf.d"
+    state: directory
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    mode: 0755
+
+- name: Restart the PostgreSQL process or service
+  service:
+    name: postgresql
+    state: restarted
+  when: postgresql_hba_configuration.changed or postgresql_settings_configuration.changed

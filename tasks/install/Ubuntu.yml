@@ -1,0 +1,54 @@
+---
+
+- name: Add the official PostgreSQL repository APT key to the system
+  apt_key:
+    id: "{{ postgresql_apt_key_id }}"
+    url: "{{ postgresql_apt_key_url }}"
+    state: present
+
+- name: Add the official PostgreSQL repository to the system
+  apt_repository:
+    repo: "{{ postgresql_apt_repository }}"
+    state: present
+
+- name: Install PostgreSQL dependency packages
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
+  with_items:
+    - python-psycopg2
+    - python-pycurl
+
+- name: Install PostgreSQL packages
+  apt:
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
+  environment: postgresql_env
+  with_items:
+    - "postgresql-{{ postgresql_version }}"
+    - "postgresql-client-{{ postgresql_version }}"
+    - "postgresql-contrib-{{ postgresql_version }}"
+
+- name: Install the PostgreSQL contrib extensions
+  apt:
+    name: "postgresql-contrib-{{ postgresql_version }}"
+    state: present
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
+  notify:
+    - restart postgresql
+  when: postgresql_ext_install_contrib
+
+- name: Install the PostgreSQL development headers
+  apt:
+    name: libpq-dev
+    state: present
+    update_cache: yes
+    cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
+  notify:
+    - restart postgresql
+  when: postgresql_ext_install_dev_headers
