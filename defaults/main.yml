@@ -1,13 +1,15 @@
 ---
 
-# General settings.
+#------------------------------------------------------------------------------
+# GENERAL
+#------------------------------------------------------------------------------
+
 postgresql_encoding: 'UTF-8'
 postgresql_locale: 'en_US.UTF-8'
 
 postgresql_admin_role: "postgres"
 postgresql_default_auth_method: "trust"
 
-# Operating system-level user/group that will run the postgresql process or service.
 postgresql_service_user: "{{ postgresql_admin_role }}"
 postgresql_service_group: "{{ postgresql_admin_role }}"
 
@@ -18,13 +20,10 @@ postgresql_database_owner: "{{ postgresql_admin_role }}"
 postgresql_ext_install_contrib: no
 postgresql_ext_install_dev_headers: yes
 
-# List of databases to be created (optional).
 postgresql_databases: []
 
-# List of roles to be created (optional).
 postgresql_roles: []
 
-# List of role privileges to be applied (optional).
 postgresql_role_privileges: []
 
 #------------------------------------------------------------------------------

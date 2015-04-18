@@ -19,7 +19,6 @@ Vagrant.configure('2') do |config|
         postgresql_version: 9.4
       }
       ansible.verbose = 'vv'
-      ansible.sudo = true
       ansible.inventory_path = 'vagrant-inventory'
       ansible.host_key_checking = false
     end
@@ -36,7 +35,6 @@ Vagrant.configure('2') do |config|
         postgresql_version: 9.3
       }
       ansible.verbose = 'vv'
-      ansible.sudo = true
       ansible.inventory_path = 'vagrant-inventory'
       ansible.host_key_checking = false
     end

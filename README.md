@@ -75,9 +75,21 @@ See the following Ansible variable files for more settings that can be configure
 - `vars/Ubuntu-14.04.yml` - contains the defaults for variables specific to PostgreSQL running on Ubuntu 14.04.
 - `vars/Ubuntu.yml` - contains the defaults for variables specific to PostgreSQL running on Ubuntu (any version of Ubuntu).
 
+#### Testing
+
+##### Local tests
+
+A Vagrantfile has been included with this project to provision two (2) virtual machines with the Ansible role using some test data. One virtual machine will install and configure PostgreSQL version 9.3 and the other, version 9.4. Please execute the `vagrant up` command create these virtual machines.
+
+To destroy the Vagrant virtual machines after the provisioning process is complete, execute `vagrant destroy` and follow the prompts.
+
+##### Automated tests
+
+Automated tests to check the correctness of the Ansible playbook syntax and the idempotency of the role are executed after a commit to GitHub. These automated tests are performed by [Travis CI](https://travis-ci.org/). Both the PostgreSQL version 9.3 and 9.4 cases are tested.
+
 #### Notes
 
-Both PostgreSQL version 9.3 and PostgreSQL 9.4 are supported and tested by this role. When `vagrant up` is run in the repository root, two Vagrant VMs will be provisioned - one with a PostgreSQL 9.3 cluster and the other with a PostgreSQL 9.4 cluster. The automated Travis CI tests will also test PostgreSQL version 9.3 and PostreSQL version 9.4.
+None.
 
 #### License
 
