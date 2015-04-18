@@ -29,6 +29,7 @@
     group: "{{ postgresql_service_group }}"
     mode: 0640
   register: postgresql_hba_configuration
+  sudo: yes
 
 - name: Create the PostgreSQL settings configuration file (postgresql.conf)
   template:
@@ -38,6 +39,7 @@
     group: "{{ postgresql_service_group }}"
     mode: 0640
   register: postgresql_settings_configuration
+  sudo: yes
 
 - name: Create directory for additional PostgreSQL application configuration files
   file:
@@ -46,9 +48,11 @@
     owner: "{{ postgresql_service_user }}"
     group: "{{ postgresql_service_group }}"
     mode: 0755
+  sudo: yes
 
 - name: Restart the PostgreSQL process or service
   service:
     name: postgresql
     state: restarted
+  sudo: yes
   when: postgresql_hba_configuration.changed or postgresql_settings_configuration.changed

@@ -4,6 +4,7 @@
   service:
     name: postgresql
     state: started
+  sudo: yes
 
 - name: Add the provided roles to the PostgreSQL instance
   postgresql_user:

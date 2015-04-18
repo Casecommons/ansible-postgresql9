@@ -4,6 +4,7 @@
   service:
     name: postgresql
     state: started
+  sudo: yes
 
 - name: Create the provided PostgreSQL databases
   postgresql_db:
