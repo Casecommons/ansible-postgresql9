@@ -2,7 +2,6 @@
 
 - include_vars: "{{ item }}"
   with_items:
-    - "postgresql-{{ postgresql_version }}.yml"
     - "{{ ansible_distribution }}.yml"
     - "{{ ansible_distribution }}-{{ ansible_distribution_version }}.yml"
 
