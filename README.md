@@ -13,15 +13,15 @@ Ansible role for installing and initializing a PostgreSQL 9.x cluster.
 
 #### Role Dependencies
 
-- [alliedplatform.security](https://github.com/alliedplatform/security-ansible-role)
+None.
 
 #### Variables
 
 ##### Required variables
 
-- `postgresql_version` - determines the version of PostgreSQL that will be installed. This can be set to `9.3` or `9.4`. The latest patch version (for example, 9.4.1 from a setting of `9.4`) will be installed.
+- `postgresql_version` - determines the version of PostgreSQL that will be installed.
 
-##### Common variables
+##### Optional variables
 
 - `postgresql_encoding` - determines the encoding of the database template (via the `pg_createcluster` command) and the encoding of **all** databases created via this Ansible role (see the `postgresql_databases` variable). The default setting is `UTF-8`.
 - `postgresql_locale` - determines the default locale for the database cluster and of **all** databases created via this Ansible role (see the `postgresql_databases` variable). The default setting is `en_US.UTF-8`.
@@ -69,9 +69,8 @@ postgresql_role_privileges:
 
 See the following Ansible variable files for more settings that can be configured during the provisioning process.
 
-- `defaults/main.yml` - contains the defaults for all variables and the common variables for the `pg_hba.conf` file and `postgresql.conf` file between PostgreSQL versions 9.3 and 9.4.
-- `vars/postgresql-9.3.yml` - contains the defaults for all `postgresql.conf` file settings **specific** to PostgreSQL version 9.3.
-- `vars/postgresql-9.4.yml` - contains the defaults for all `postgresql.conf` file settings **specific** to PostgreSQL version 9.4.
+- `defaults/main.yml` - contains the defaults for all play variables and the variables for the `pg_hba.conf` and `postgresql.conf` PostgreSQL cluster configuration files.
+- `vars/Ubuntu-12.04.yml` - contains the defaults for variables specific to PostgreSQL running on Ubuntu 12.04.
 - `vars/Ubuntu-14.04.yml` - contains the defaults for variables specific to PostgreSQL running on Ubuntu 14.04.
 - `vars/Ubuntu.yml` - contains the defaults for variables specific to PostgreSQL running on Ubuntu (any version of Ubuntu).
 
@@ -79,13 +78,25 @@ See the following Ansible variable files for more settings that can be configure
 
 ##### Local tests
 
-A Vagrantfile has been included with this project to provision two (2) virtual machines with the Ansible role using some test data. One virtual machine will install and configure PostgreSQL version 9.3 and the other, version 9.4. Please execute the `vagrant up` command create these virtual machines.
+A Vagrantfile has been included with this project to provision a virtual machine with the Ansible role using some test data. The `test.sh` script will run the Ansible playbook against each machine after it is first provisioned. This is to ensure that the plays are structured for idempotency (i.e. that there are no changes to the system if the same playbook is run twice with the same inputs). Please execute the following steps to use the `test.sh` script:
 
-To destroy the Vagrant virtual machines after the provisioning process is complete, execute `vagrant destroy` and follow the prompts.
+1. Provide the `test.sh` script with execute permissions.
+
+```
+$ chmod +x test.sh
+```
+
+2. Run the `test.sh` script.
+
+```
+$ ./test.sh
+```
+
+To destroy the Vagrant virtual machine after the provisioning process is complete, execute `vagrant destroy` and follow the prompts.
 
 ##### Automated tests
 
-Automated tests to check the correctness of the Ansible playbook syntax and the idempotency of the role are executed after a commit to GitHub. These automated tests are performed by [Travis CI](https://travis-ci.org/). Both the PostgreSQL version 9.3 and 9.4 cases are tested.
+Automated tests to check the correctness of the Ansible playbook syntax and the idempotency of the role are executed after a commit to GitHub. These automated tests are performed by [Travis CI](https://travis-ci.org/).
 
 #### Notes
 

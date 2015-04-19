@@ -68,9 +68,8 @@ authentication_timeout  = {{postgresql_authentication_timeout}}
 ssl                     = {{'on' if postgresql_ssl else 'off'}}
 ssl_ciphers             = '{{postgresql_ssl_ciphers|join(':')}}'
 
-{% if postgresql_version == 9.4 %}ssl_prefer_server_ciphers = {{postgresql_ssl_prefer_server_ciphers}}{% endif %}
-
-{% if postgresql_version == 9.4 %}ssl_ecdh_curve = '{{postgresql_ssl_ecdh_curve}}'{% endif %}
+ssl_prefer_server_ciphers = {{postgresql_ssl_prefer_server_ciphers}}
+ssl_ecdh_curve = '{{postgresql_ssl_ecdh_curve}}'
 
 ssl_renegotiation_limit = {{postgresql_ssl_renegotiation_limit}}
 ssl_cert_file           = '{{postgresql_ssl_cert_file}}'
@@ -82,9 +81,6 @@ db_user_namespace       = {{'on' if postgresql_db_user_namespace else 'off'}}
 
 # Kerberos and GSSAPI
 krb_server_keyfile = '{{postgresql_krb_server_keyfile}}'
-
-{% if postgresql_version == 9.3 %}krb_srvname = '{{postgresql_krb_srvname}}'{% endif %}
-
 krb_caseins_users  = {{'on' if postgresql_db_user_namespace else 'off'}}
 
 # TCP Keepalives, 0 selects the system default
@@ -104,13 +100,13 @@ temp_buffers   = {{postgresql_temp_buffers}}
 
 max_prepared_transactions = {{postgresql_max_prepared_transactions}}
 
-{% if postgresql_version == 9.4 %}huge_pages = {{postgresql_huge_pages}}{% endif %}
+huge_pages = {{postgresql_huge_pages}}
 
 work_mem             = {{postgresql_work_mem}}
 maintenance_work_mem = {{postgresql_maintenance_work_mem}}
 max_stack_depth      = {{postgresql_max_stack_depth}}
 
-{% if postgresql_version == 9.4 %}dynamic_shared_memory_type = {{postgresql_dynamic_shared_memory_type}}{% endif %}
+dynamic_shared_memory_type = {{postgresql_dynamic_shared_memory_type}}
 
 
 # - Disk -
@@ -144,7 +140,7 @@ bgwriter_lru_multiplier = {{postgresql_bgwriter_lru_multiplier}}
 
 effective_io_concurrency = {{postgresql_effective_io_concurrency}}
 
-{% if postgresql_version == 9.4 %}max_worker_processes = {{postgresql_max_worker_processes}}{% endif %}
+max_worker_processes = {{postgresql_max_worker_processes}}
 
 #------------------------------------------------------------------------------
 # WRITE AHEAD LOG
@@ -161,7 +157,7 @@ wal_sync_method = {{postgresql_wal_sync_method}}
 
 full_page_writes = {{'on' if postgresql_full_page_writes else 'off'}}
 
-{% if postgresql_version == 9.4 %}wal_log_hints = {{postgresql_wal_log_hints}}{% endif %}
+wal_log_hints = {{postgresql_wal_log_hints}}
 
 wal_buffers      = {{postgresql_wal_buffers}}
 wal_writer_delay = {{postgresql_wal_writer_delay}}
@@ -191,8 +187,7 @@ archive_timeout = {{postgresql_archive_timeout}}
 # - Sending Server(s) -
 
 max_wal_senders    = {{postgresql_max_wal_senders}}
-
-{% if postgresql_version == 9.4 %}max_replication_slots = {{postgresql_max_replication_slots}}{% endif %}
+max_replication_slots = {{postgresql_max_replication_slots}}
 
 wal_keep_segments  = {{postgresql_wal_keep_segments}}
 wal_sender_timeout = {{postgresql_wal_sender_timeout}}
@@ -354,7 +349,7 @@ autovacuum_freeze_max_age = {{postgresql_autovacuum_freeze_max_age}}
 autovacuum_vacuum_cost_delay = {{postgresql_autovacuum_vacuum_cost_delay}}
 autovacuum_vacuum_cost_limit = {{postgresql_autovacuum_vacuum_cost_limit}}
 
-{% if postgresql_version == 9.4 %}autovacuum_work_mem = {{postgresql_autovacuum_work_mem}}{% endif %}
+autovacuum_work_mem = {{postgresql_autovacuum_work_mem}}
 
 
 #------------------------------------------------------------------------------
@@ -404,7 +399,7 @@ default_text_search_config = '{{postgresql_default_text_search_config}}'
 dynamic_library_path       = '{{postgresql_dynamic_library_path}}'
 local_preload_libraries    = '{{postgresql_local_preload_libraries|join(',')}}'
 
-{% if postgresql_version == 9.4 %}session_preload_libraries = '{{postgresql_session_preload_libraries|join(',')}}'{% endif %}
+session_preload_libraries = '{{postgresql_session_preload_libraries|join(',')}}'
 
 #------------------------------------------------------------------------------
 # LOCK MANAGEMENT
