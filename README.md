@@ -50,7 +50,7 @@ Example:
 ```
 postgresql_roles:
   - name: adamjcook
-    pass: Password1
+    password: Password1
 ```
 
 - `postgresql_role_privileges` - a list of YAML dictionaries describing the database where the privileges and any role attributes will be granted.
