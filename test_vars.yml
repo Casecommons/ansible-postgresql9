@@ -1,3 +1,15 @@
 ---
 
 postgresql_version: '9.4'
+postgresql_databases:
+  - name: 'accounting_db'
+    hstore: yes
+    uuid_ossp: yes
+postgresql_roles:
+  - name: 'adamjcook'
+    password: 'Password1'
+postgresql_role_privileges:
+  - role: 'adamjcook'
+    database: 'accounting_db'
+    privileges: 'ALL'
+    role_attr_flags: 'CREATEDB'
