@@ -54,7 +54,11 @@ port = {{postgresql_port}}
 max_connections = {{postgresql_max_connections}}
 superuser_reserved_connections = {{postgresql_superuser_reserved_connections}}
 
+{% if postgresql_92 == true %}
+unix_socket_directory = '{{postgresql_unix_socket_directories|join(',')}}'
+{% else %}
 unix_socket_directories = '{{postgresql_unix_socket_directories|join(',')}}'
+{% endif %}
 unix_socket_group       = '{{postgresql_unix_socket_group}}'
 unix_socket_permissions = {{postgresql_unix_socket_permissions}}
 
@@ -68,8 +72,10 @@ authentication_timeout  = {{postgresql_authentication_timeout}}
 ssl                     = {{'on' if postgresql_ssl else 'off'}}
 ssl_ciphers             = '{{postgresql_ssl_ciphers|join(':')}}'
 
+{% if not postgresql_92 %}
 ssl_prefer_server_ciphers = {{postgresql_ssl_prefer_server_ciphers}}
 ssl_ecdh_curve = '{{postgresql_ssl_ecdh_curve}}'
+{% endif %}
 
 ssl_renegotiation_limit = {{postgresql_ssl_renegotiation_limit}}
 ssl_cert_file           = '{{postgresql_ssl_cert_file}}'
@@ -100,14 +106,17 @@ temp_buffers   = {{postgresql_temp_buffers}}
 
 max_prepared_transactions = {{postgresql_max_prepared_transactions}}
 
+{% if not postgresql_92 %}
 huge_pages = {{postgresql_huge_pages}}
+{% endif %}
 
 work_mem             = {{postgresql_work_mem}}
 maintenance_work_mem = {{postgresql_maintenance_work_mem}}
 max_stack_depth      = {{postgresql_max_stack_depth}}
 
+{% if not postgresql_92 %}
 dynamic_shared_memory_type = {{postgresql_dynamic_shared_memory_type}}
-
+{% endif %}
 
 # - Disk -
 
@@ -140,7 +149,9 @@ bgwriter_lru_multiplier = {{postgresql_bgwriter_lru_multiplier}}
 
 effective_io_concurrency = {{postgresql_effective_io_concurrency}}
 
+{% if not postgresql_92 %}
 max_worker_processes = {{postgresql_max_worker_processes}}
+{% endif %}
 
 #------------------------------------------------------------------------------
 # WRITE AHEAD LOG
@@ -157,7 +168,9 @@ wal_sync_method = {{postgresql_wal_sync_method}}
 
 full_page_writes = {{'on' if postgresql_full_page_writes else 'off'}}
 
+{% if not postgresql_92 %}
 wal_log_hints = {{postgresql_wal_log_hints}}
+{% endif %}
 
 wal_buffers      = {{postgresql_wal_buffers}}
 wal_writer_delay = {{postgresql_wal_writer_delay}}
@@ -187,11 +200,14 @@ archive_timeout = {{postgresql_archive_timeout}}
 # - Sending Server(s) -
 
 max_wal_senders    = {{postgresql_max_wal_senders}}
+{% if not postgresql_92 %}
 max_replication_slots = {{postgresql_max_replication_slots}}
+{% endif %}
 
 wal_keep_segments  = {{postgresql_wal_keep_segments}}
+{% if not postgresql_92 %}
 wal_sender_timeout = {{postgresql_wal_sender_timeout}}
-
+{% endif %}
 
 # - Master Server -
 
@@ -207,8 +223,9 @@ max_standby_archive_delay = {{postgresql_max_standby_archive_delay}}
 max_standby_streaming_delay = {{postgresql_max_standby_streaming_delay}}
 wal_receiver_status_interval = {{postgresql_wal_receiver_status_interval}}
 hot_standby_feedback = {{'on' if postgresql_hot_standby_feedback or 'off'}}
+{% if not postgresql_92 %}
 wal_receiver_timeout = {{postgresql_wal_receiver_timeout}}
-
+{% endif %}
 
 #------------------------------------------------------------------------------
 # QUERY TUNING
@@ -349,8 +366,9 @@ autovacuum_freeze_max_age = {{postgresql_autovacuum_freeze_max_age}}
 autovacuum_vacuum_cost_delay = {{postgresql_autovacuum_vacuum_cost_delay}}
 autovacuum_vacuum_cost_limit = {{postgresql_autovacuum_vacuum_cost_limit}}
 
+{% if not postgresql_92 %}
 autovacuum_work_mem = {{postgresql_autovacuum_work_mem}}
-
+{% endif %}
 
 #------------------------------------------------------------------------------
 # CLIENT CONNECTION DEFAULTS
@@ -369,7 +387,9 @@ default_transaction_deferrable = {{'on' if postgresql_default_transaction_deferr
 session_replication_role       = '{{postgresql_session_replication_role}}'
 
 statement_timeout              = {{postgresql_statement_timeout}}
+{% if not postgresql_92 %}
 lock_timeout                   = {{postgresql_lock_timeout}}
+{% endif %}
 vacuum_freeze_min_age          = {{postgresql_vacuum_freeze_min_age}}
 vacuum_freeze_table_age        = {{postgresql_vacuum_freeze_table_age}}
 
@@ -399,7 +419,9 @@ default_text_search_config = '{{postgresql_default_text_search_config}}'
 dynamic_library_path       = '{{postgresql_dynamic_library_path}}'
 local_preload_libraries    = '{{postgresql_local_preload_libraries|join(',')}}'
 
+{% if not postgresql_92 %}
 session_preload_libraries = '{{postgresql_session_preload_libraries|join(',')}}'
+{% endif %}
 
 #------------------------------------------------------------------------------
 # LOCK MANAGEMENT
@@ -448,8 +470,10 @@ restart_after_crash = {{'on' if postgresql_restart_after_crash else 'off'}}
 # These options allow settings to be loaded from files other than the
 # default postgresql.conf.
 
+{% if not postgresql_92 %}
 include_dir = 'conf.d'                  # include files ending in '.conf' from
                                         # directory 'conf.d'
+{% endif %}
 #include_if_exists = 'exists.conf'      # include file only if it exists
 #include = 'special.conf'               # include file
 
