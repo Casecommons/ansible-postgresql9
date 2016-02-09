@@ -4,8 +4,6 @@
 # GENERAL
 #------------------------------------------------------------------------------
 
-postgresql_92: 'false'
-
 postgresql_encoding: 'UTF-8'
 postgresql_locale: 'en_US.UTF-8'
 
