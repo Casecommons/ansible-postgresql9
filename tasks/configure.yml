@@ -21,6 +21,9 @@
   sudo_user: "{{ postgresql_service_user }}"
   when: postgresql_cluster_reset and pgdata_dir_exists.changed
 
+- name: Ensure postgres config directory exists in case we are doing a re-install with data on EBS
+  file: name="/etc/postgresql/{{ postgresql_version }}/main" state="directory"
+
 - name: Create the PostgreSQL HBA (Host Based Authentication) configuration file (pg_hba.conf)
   template:
     src: pg_hba.conf.j2
