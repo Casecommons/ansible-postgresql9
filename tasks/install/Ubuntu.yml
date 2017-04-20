@@ -30,7 +30,7 @@
     state: present
     update_cache: yes
     cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
-  environment: postgresql_env
+  environment: "{{ postgresql_env }}"
   with_items:
     - "postgresql-{{ postgresql_version }}"
     - "postgresql-client-{{ postgresql_version }}"
@@ -45,7 +45,7 @@
     cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
   notify:
     - restart postgresql
-  when: postgresql_ext_install_contrib
+  when: "{{ postgresql_ext_install_contrib }}"
   sudo: yes
 
 - name: Install the PostgreSQL development headers
@@ -56,5 +56,5 @@
     cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
   notify:
     - restart postgresql
-  when: postgresql_ext_install_dev_headers
+  when: "{{ postgresql_ext_install_dev_headers }}"
   sudo: yes

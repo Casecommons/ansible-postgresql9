@@ -12,5 +12,5 @@
     role_attr_flags: "{{ item.role_attr_flags | default('') }}"
   sudo: yes
   sudo_user: "{{ postgresql_admin_role }}"
-  with_items: postgresql_role_privileges
-  when: postgresql_roles|length > 0
+  with_items: "{{ postgresql_role_privileges }}"
+  when: "{{ postgresql_roles|length > 0 }}"

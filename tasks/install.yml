@@ -2,4 +2,4 @@
 
 - name: Include Ubuntu-specific PostgreSQL installation tasks
   include: install/Ubuntu.yml
-  when: ansible_distribution == 'Ubuntu'
+  when: "{{ ansible_distribution == 'Ubuntu' }}"

@@ -13,13 +13,13 @@
   shell: pg_dropcluster --stop {{postgresql_version}} {{postgresql_cluster_name}}
   sudo: yes
   sudo_user: "{{ postgresql_service_user }}"
-  when: postgresql_cluster_reset and pgdata_dir_exists.changed
+  when: "{{ postgresql_cluster_reset and pgdata_dir_exists.changed }}"
 
 - name: Create a new PostgreSQL cluster with specified encoding and locale
   shell: pg_createcluster --start --locale {{postgresql_locale}} -e {{postgresql_encoding}} -d {{postgresql_data_directory}} {{postgresql_version}} {{postgresql_cluster_name}}
   sudo: yes
   sudo_user: "{{ postgresql_service_user }}"
-  when: postgresql_cluster_reset and pgdata_dir_exists.changed
+  when: "{{ postgresql_cluster_reset and pgdata_dir_exists.changed }}"
 
 - name: Create the PostgreSQL HBA (Host Based Authentication) configuration file (pg_hba.conf)
   template:
@@ -55,4 +55,4 @@
     name: postgresql
     state: restarted
   sudo: yes
-  when: postgresql_hba_configuration.changed or postgresql_settings_configuration.changed
+  when: "{{ postgresql_hba_configuration.changed or postgresql_settings_configuration.changed }}"

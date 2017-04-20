@@ -15,5 +15,5 @@
     login_user: "{{ postgresql_admin_role }}"
   sudo: yes
   sudo_user: "{{ postgresql_admin_role }}"
-  with_items: postgresql_roles
-  when: postgresql_roles|length > 0
+  with_items: "{{ postgresql_roles }}"
+  when: "{{ postgresql_roles|length > 0 }}"
