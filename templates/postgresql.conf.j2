@@ -71,7 +71,6 @@ ssl_ciphers             = '{{postgresql_ssl_ciphers|join(':')}}'
 ssl_prefer_server_ciphers = {{postgresql_ssl_prefer_server_ciphers}}
 ssl_ecdh_curve = '{{postgresql_ssl_ecdh_curve}}'
 
-ssl_renegotiation_limit = {{postgresql_ssl_renegotiation_limit}}
 ssl_cert_file           = '{{postgresql_ssl_cert_file}}'
 ssl_key_file            = '{{postgresql_ssl_key_file}}'
 ssl_ca_file             = '{{postgresql_ssl_ca_file}}'
@@ -167,7 +166,6 @@ commit_siblings  = {{postgresql_commit_siblings}}
 
 # - Checkpoints -
 
-checkpoint_segments          = {{postgresql_checkpoint_segments}}
 checkpoint_timeout           = {{postgresql_checkpoint_timeout}}
 checkpoint_completion_target = {{postgresql_checkpoint_completion_target}}
 checkpoint_warning           = {{postgresql_checkpoint_warning}}
