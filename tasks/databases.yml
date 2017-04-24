@@ -21,6 +21,7 @@
   sudo_user: "{{ postgresql_admin_role }}"
   with_items: "{{ postgresql_databases }}"
   when: "{{ postgresql_databases|length > 0 }}"
+  ignore_errors: yes
 
 - name: Add the hstore extension to the PostgreSQL databases
   sudo: yes
