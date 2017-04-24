@@ -29,6 +29,7 @@
     name: "{{ item }}"
     state: present
     update_cache: yes
+    force: yes
     cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
   environment: "{{ postgresql_env }}"
   with_items:
