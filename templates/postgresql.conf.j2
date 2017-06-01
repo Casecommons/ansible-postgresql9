@@ -72,12 +72,13 @@ authentication_timeout  = {{postgresql_authentication_timeout}}
 ssl                     = {{'on' if postgresql_ssl else 'off'}}
 ssl_ciphers             = '{{postgresql_ssl_ciphers|join(':')}}'
 
-{% if not postgresql_92|default(False) %}
+{% if postgresql_92|default(False) %}
+ssl_renegotiation_limit = {{postgresql_ssl_renegotiation_limit}}
+{% else %}
 ssl_prefer_server_ciphers = {{postgresql_ssl_prefer_server_ciphers}}
 ssl_ecdh_curve = '{{postgresql_ssl_ecdh_curve}}'
 {% endif %}
 
-ssl_renegotiation_limit = {{postgresql_ssl_renegotiation_limit}}
 ssl_cert_file           = '{{postgresql_ssl_cert_file}}'
 ssl_key_file            = '{{postgresql_ssl_key_file}}'
 ssl_ca_file             = '{{postgresql_ssl_ca_file}}'
@@ -180,7 +181,10 @@ commit_siblings  = {{postgresql_commit_siblings}}
 
 # - Checkpoints -
 
+{% if postgresql_92|default(False) %}
 checkpoint_segments          = {{postgresql_checkpoint_segments}}
+{% endif %}
+
 checkpoint_timeout           = {{postgresql_checkpoint_timeout}}
 checkpoint_completion_target = {{postgresql_checkpoint_completion_target}}
 checkpoint_warning           = {{postgresql_checkpoint_warning}}
