@@ -1,12 +1,12 @@
 ---
 
 # General locale settings.
-postgresql_locale: 'C.UTF-8'
+postgresql_locale: 'en_US.UTF-8'
 # Locale for system error message.
-postgresql_lc_messages: C.UTF-8
+postgresql_lc_messages: 'en_US.UTF-8'
 # Locale for monetary formatting.
-postgresql_lc_monetary: C.UTF-8
+postgresql_lc_monetary: 'en_US.UTF-8'
 # Locale for number formatting.
-postgresql_lc_numeric: C.UTF-8
+postgresql_lc_numeric: 'en_US.UTF-8'
 # Locale for time formatting.
-postgresql_lc_time: C.UTF-8
+postgresql_lc_time: 'en_US.UTF-8'
