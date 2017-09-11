@@ -9,6 +9,15 @@
     mode: 0700
   register: pgdata_dir_exists
 
+- name: Ensure that the postgres conf directory exists
+  file:
+    path: "{{ postgresql_conf_directory }}"
+    owner: "{{ postgresql_service_user }}"
+    group: "{{ postgresql_service_group }}"
+    state: directory
+    mode: 0700
+  register: pgconf_dir_exists
+
 - name: Drop the existing PostgreSQL cluster
   shell: pg_dropcluster --stop {{postgresql_version}} {{postgresql_cluster_name}}
   sudo: yes
