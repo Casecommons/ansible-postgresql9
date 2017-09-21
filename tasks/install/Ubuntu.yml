@@ -5,13 +5,13 @@
     id: "{{ postgresql_apt_key_id }}"
     url: "{{ postgresql_apt_key_url }}"
     state: present
-  sudo: yes
+  become: yes
 
 - name: Add the official PostgreSQL repository to the system
   apt_repository:
     repo: "{{ postgresql_apt_repository }}"
     state: present
-  sudo: yes
+  become: yes
 
 - name: Install PostgreSQL dependency packages
   apt:
@@ -22,7 +22,7 @@
   with_items:
     - python-psycopg2
     - python-pycurl
-  sudo: yes
+  become: yes
 
 - name: Install PostgreSQL packages
   apt:
@@ -36,7 +36,7 @@
     - "postgresql-{{ postgresql_version }}"
     - "postgresql-client-{{ postgresql_version }}"
     - "postgresql-contrib-{{ postgresql_version }}"
-  sudo: yes
+  become: yes
 
 - name: Install the PostgreSQL contrib extensions
   apt:

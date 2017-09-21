@@ -4,7 +4,7 @@
   service:
     name: postgresql
     state: started
-  sudo: yes
+  become: yes
 
 - name: Create the provided PostgreSQL databases
   postgresql_db:
@@ -17,15 +17,15 @@
     template: "template0"
     state: present
     login_user: "{{ postgresql_admin_role }}"
-  sudo: yes
-  sudo_user: "{{ postgresql_admin_role }}"
+  become: yes
+  become_user: "{{ postgresql_admin_role }}"
   with_items: "{{ postgresql_databases }}"
   when: "{{ postgresql_databases|length > 0 }}"
   ignore_errors: yes
 
 - name: Add the hstore extension to the PostgreSQL databases
-  sudo: yes
-  sudo_user: "{{ postgresql_service_user }}"
+  become: yes
+  become_user: "{{ postgresql_service_user }}"
   shell: "psql {{ item.name }} --username {{ postgresql_admin_role }} -c 'CREATE EXTENSION IF NOT EXISTS hstore;'"
   with_items: "{{ postgresql_databases }}"
   register: hstore_ext_result
@@ -34,8 +34,8 @@
   when: "{{ item.hstore is defined and item.hstore }}"
 
 - name: Add the uuid-ossp extension to the PostgreSQL databases
-  sudo: yes
-  sudo_user: "{{ postgresql_service_user }}"
+  become: yes
+  become_user: "{{ postgresql_service_user }}"
   shell: "psql {{ item.name }} --username {{ postgresql_admin_role }} -c 'CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\";'"
   with_items: "{{ postgresql_databases }}"
   register: uuid_ext_result

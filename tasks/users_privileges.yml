@@ -10,7 +10,7 @@
     login_host: "{{ item.host | default('localhost') }}"
     login_user: "{{ postgresql_admin_role }}"
     role_attr_flags: "{{ item.role_attr_flags | default('') }}"
-  sudo: yes
-  sudo_user: "{{ postgresql_admin_role }}"
+  become: yes
+  become_user: "{{ postgresql_admin_role }}"
   with_items: "{{ postgresql_role_privileges }}"
   when: "{{ postgresql_roles|length > 0 }}"
