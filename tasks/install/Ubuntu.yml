@@ -57,5 +57,5 @@
     cache_valid_time: "{{ apt_cache_valid_time | default (3600) }}"
   notify:
     - restart postgresql
-  when: "{{ postgresql_ext_install_dev_headers }}"
-  sudo: yes
+  when: postgresql_ext_install_dev_headers
+  become: yes
