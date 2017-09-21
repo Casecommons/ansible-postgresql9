@@ -16,4 +16,4 @@
   become: yes
   become_user: "{{ postgresql_admin_role }}"
   with_items: "{{ postgresql_roles }}"
-  when: "{{ postgresql_roles|length > 0 }}"
+  when: postgresql_roles|length > 0
