@@ -20,6 +20,9 @@ postgresql_database_owner: "{{ postgresql_admin_role }}"
 postgresql_ext_install_contrib: no
 postgresql_ext_install_dev_headers: yes
 
+postgres_shmmax: "300000000"
+postgresql_92: False
+
 postgresql_databases: []
 
 postgresql_roles: []
