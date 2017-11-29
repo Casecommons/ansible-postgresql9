@@ -1,5 +1,14 @@
 ---
 
+- name: Set shmmax for postgres
+  sysctl:
+    name: "kernel.shmmax"
+    value: "{{ postgres_shmmax }}"
+    sysctl_set: yes
+    state: present
+    reload: yes
+  when: postgres_shmmax is defined
+
 - name: Ensure that the postgres data directory exists
   file:
     path: "{{ postgresql_data_directory }}"
