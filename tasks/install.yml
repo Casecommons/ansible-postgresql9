@@ -7,7 +7,6 @@
     sysctl_set: yes
     state: present
     reload: yes
-  when: postgresql_shmmax is defined
 
 - name: Include Ubuntu-specific PostgreSQL installation tasks
   include: install/Ubuntu.yml
