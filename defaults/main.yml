@@ -123,6 +123,8 @@ postgresql_maintenance_work_mem: 16MB  # minimum 1MB
 postgresql_shared_buffers:       128MB # minimum 128kB
 postgresql_temp_buffers:         8MB   # minimum 800kB
 
+postgresql_shmmax: "5000000000"
+
 # Dynamic shared memory implementation that the server should use.
 # Valid settings are the following:
 # - posix - for POSIX shared memory allocated using shm_open

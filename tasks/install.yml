@@ -3,11 +3,11 @@
 - name: Set shmmax for postgres
   sysctl:
     name: "kernel.shmmax"
-    value: "{{ postgres_shmmax }}"
+    value: "{{ postgresql_shmmax }}"
     sysctl_set: yes
     state: present
     reload: yes
-  when: postgres_shmmax is defined
+  when: postgresql_shmmax is defined
 
 - name: Include Ubuntu-specific PostgreSQL installation tasks
   include: install/Ubuntu.yml
